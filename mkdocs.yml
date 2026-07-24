@@ -1,19 +1,19 @@
-# Client documentation portal — MkDocs Material.
-# Placeholders (Accienta etc.) are filled by the MCP docs tools.
+# Client implementation portal - MkDocs Material.
+# The dashboard renders from status.yml via overrides/hooks/dashboard.py.
 # This file and everything under docs/ is independent from the Odoo repository.
 
-site_name: Accienta — Project Portal
-site_description: Implementation portal for Accienta
-site_author: Accienta
+site_name: Growth Factors Implementation Portal
+site_description: Implementation delivery portal by Growth Factors
+site_author: Growth Factors
 # site_url is set at publish time from docs.config.yml
-copyright: Copyright &copy; Accienta implementation
+copyright: Copyright &copy; Growth Factors. All rights reserved.
 
 theme:
   name: material
   custom_dir: overrides
   language: en
   logo: assets/logo.svg
-  favicon: assets/logo.svg
+  favicon: assets/favicon.svg
   font:
     text: Inter
     code: JetBrains Mono
@@ -36,7 +36,6 @@ theme:
     - navigation.instant.prefetch
     - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.sections
     - navigation.top
     - navigation.tracking
     - navigation.indexes
@@ -46,22 +45,34 @@ theme:
     - search.highlight
     - search.share
     - content.code.copy
-    - content.code.annotate
     - content.tooltips
 
 nav:
-  - Overview: index.md
-  - Implementation:
-      - Progress: implementation.md
-      - Modules: modules.md
-      - Workflows: workflows.md
-  - Architecture:
-      - Overview: architecture.md
-      - Decisions: decisions.md
-  - Guides:
-      - Training: training.md
-      - User Guides: user-guides.md
-  - Change History: changelog.md
+  - Home: index.md
+  - Project Overview: overview.md
+  - Delivered Modules:
+      - Overview: modules/index.md
+      - CRM: modules/crm.md
+      - Sales & Quoting: modules/sales.md
+      - Procurement Automation: modules/procurement.md
+      - Accounting & Finance: modules/finance.md
+      - Tax & Localization: modules/localization.md
+      - Organization & Access: modules/organization.md
+  - Business Processes: workflows.md
+  - Solution Architecture: architecture.md
+  - User Training: training.md
+  - Change Requests: changerequests.md
+  - Support: support.md
+
+# Auto-generated technical pages are kept for the generator but excluded from
+# the client-facing navigation and search (they carry internal module detail).
+not_in_nav: |
+  modules.md
+  decisions.md
+  changelog.md
+
+hooks:
+  - overrides/hooks/dashboard.py
 
 plugins:
   - search
@@ -102,12 +113,15 @@ markdown_extensions:
 extra_css:
   - assets/extra.css
 
+extra_javascript:
+  - assets/extra.js
+
 extra:
   generator: false
-  # Filled by docs tools from docs.config.yml — used by the feedback widget.
+  # Feedback widget target - the dedicated docs repo (issues enabled).
   feedback_provider: github_issues
-  repo_owner: islamibrahim-accienta
+  repo_owner: IslamIbrahimAIM
   repo_name: accienta-docs
   social:
     - icon: material/web
-      link: https://accienta.com
+      link: https://growthfactors.ae

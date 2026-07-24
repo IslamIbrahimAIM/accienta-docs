@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Custom Modules
 
 The applications built specifically for Accienta. Each entry describes

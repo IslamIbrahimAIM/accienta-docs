@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Architecture Decisions
 
 Significant choices made during the implementation, with the reasoning behind

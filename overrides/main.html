@@ -15,8 +15,8 @@
     {% set issue_body =
         "Page: " ~ page.title ~ "\n"
         ~ "URL: " ~ page.canonical_url ~ "\n"
-        ~ "Section: \n\n"
-        ~ "Client Comment:\n\n\n"
+        ~ "Section:\n\n"
+        ~ "Client Feedback:\n\n\n"
         ~ "Requested Change:\n\n" %}
     {% set issue_url =
         "https://github.com/" ~ config.extra.repo_owner ~ "/"
@@ -30,7 +30,7 @@
         Suggest an Improvement
       </a>
       <p class="feedback-note">
-        Your feedback opens a request our team reviews — no account setup beyond GitHub sign-in.
+        Your feedback opens a request our team reviews. No account setup beyond a GitHub sign-in.
       </p>
     </div>
   {% endif %}

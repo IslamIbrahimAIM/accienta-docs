@@ -11,7 +11,7 @@ documentation:
     # provider: github_pages | cloudflare_pages
     provider: github_pages
     # Dedicated docs repository — separate from the Odoo repository.
-    repo: islamibrahim-accienta/accienta-docs
+    repo: IslamIbrahimAIM/accienta-docs
     branch: gh-pages
     # Optional custom domain (leave blank for the default Pages/CF URL).
     custom_domain: ""
@@ -23,7 +23,7 @@ feedback:
   # provider: github_issues | google_sheets | google_docs | jira | azure_devops | linear
   provider: github_issues
   github_issues:
-    repo: islamibrahim-accienta/accienta-docs
+    repo: IslamIbrahimAIM/accienta-docs
     labels:
       - documentation
       - client-feedback

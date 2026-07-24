@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Change History
 
 A running record of what changed and when, most recent first.
