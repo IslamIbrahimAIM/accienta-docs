@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+  {{ super() }}
+  <!-- Mark JS as available before first paint so the reveal animation can hide
+       content only when it can also un-hide it. Without JS the class is absent
+       and every dashboard section renders at full opacity. -->
+  <script>document.documentElement.classList.add("gf-js");</script>
+{% endblock %}
+
 <!--
   Client feedback widget. Rendered only when a feedback provider is configured.
   github_issues opens a pre-filled issue in the dedicated docs repository —

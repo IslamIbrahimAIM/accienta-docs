@@ -83,26 +83,34 @@
       var panels = spine.parentElement.querySelectorAll(".gf-phase-panel");
       function select(idx) {
         tabs.forEach(function (t, i) {
-          t.setAttribute("aria-selected", i === idx ? "true" : "false");
+          var on = i === idx;
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.setAttribute("tabindex", on ? "0" : "-1");
         });
         panels.forEach(function (p, i) {
           if (i === idx) p.removeAttribute("hidden");
           else p.setAttribute("hidden", "");
         });
       }
+      function go(next) {
+        if (next < 0) next = tabs.length - 1;
+        if (next >= tabs.length) next = 0;
+        tabs[next].focus();
+        select(next);
+      }
       tabs.forEach(function (tab, i) {
         tab.addEventListener("click", function () { select(i); });
         tab.addEventListener("keydown", function (ev) {
-          if (ev.key === "ArrowRight" || ev.key === "ArrowLeft") {
-            ev.preventDefault();
-            var next = ev.key === "ArrowRight" ? i + 1 : i - 1;
-            if (next < 0) next = tabs.length - 1;
-            if (next >= tabs.length) next = 0;
-            tabs[next].focus();
-            select(next);
-          }
+          if (ev.key === "ArrowRight") { ev.preventDefault(); go(i + 1); }
+          else if (ev.key === "ArrowLeft") { ev.preventDefault(); go(i - 1); }
+          else if (ev.key === "Home") { ev.preventDefault(); go(0); }
+          else if (ev.key === "End") { ev.preventDefault(); go(tabs.length - 1); }
         });
       });
+      // Establish roving tabindex from the initially selected tab.
+      var cur = 0;
+      tabs.forEach(function (t, i) { if (t.getAttribute("aria-selected") === "true") cur = i; });
+      select(cur);
     });
   }
 
@@ -114,14 +122,25 @@
   }
 
   function init() {
-    var root = document.querySelector(".md-content") || document;
-    markHome(root);
-    setupReveal(root);
-    setupTimeline(root);
+    try {
+      document.documentElement.classList.add("gf-js");
+      var root = document.querySelector(".md-content") || document;
+      markHome(root);
+      setupReveal(root);
+      setupTimeline(root);
+    } catch (e) {
+      // Fail open: never let a JS error leave the dashboard blank.
+      document.querySelectorAll(".gf-reveal").forEach(function (el) {
+        el.classList.add("is-in");
+      });
+      if (window.console && console.error) console.error("gf portal init:", e);
+    }
   }
 
+  // Wrap the subscription so a throw can never tear down document$ and blank
+  // every subsequent instant-navigation page.
   if (window.document$ && typeof window.document$.subscribe === "function") {
-    window.document$.subscribe(init);
+    window.document$.subscribe(function () { init(); });
   } else if (document.readyState !== "loading") {
     init();
   } else {

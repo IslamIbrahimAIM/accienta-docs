@@ -101,14 +101,15 @@ def _ring(value) -> str:
     )
 
 
-def _meter(value) -> str:
+def _meter(value, name: str = "") -> str:
     n = _int(value)
     if n is None:
         return f'<div class="gf-mod__meterwrap">{_pending()}</div>'
+    label = f"{name} completion".strip()
     return (
         '<div class="gf-mod__meterwrap">'
         f'<div class="gf-meter" role="progressbar" aria-valuenow="{n}" '
-        f'aria-valuemin="0" aria-valuemax="100">'
+        f'aria-valuemin="0" aria-valuemax="100" aria-label="{_esc(label)}">'
         f'<i class="gf-meter__fill" style="width:{n}%" data-target="{n}"></i></div>'
         f'<b class="gf-meter__num" data-count="{n}">{n}</b><span>%</span>'
         "</div>"
@@ -272,7 +273,7 @@ def render_tracker(status: dict, prefix: str, compact: bool = False) -> str:
         summary = _esc(m.get("summary") or "")
         chip = _chip(m.get("status"))
         live = _live_pill(m.get("deployed"))
-        meter = _meter(m.get("completion"))
+        meter = _meter(m.get("completion"), m.get("title") or m.get("key") or "")
         delivered = _feature_list(m.get("delivered"), "delivered")
         pending = _feature_list(m.get("pending"), "pending")
         href = _doc_href(prefix, m.get("doc"))
@@ -316,11 +317,14 @@ def render_updates(status: dict) -> str:
             date = _esc(u.get("date")) if not _tbd(u.get("date")) else ""
             kind = str(u.get("type") or "").strip().lower()
             kcls = kind if kind in ("completed", "started", "changed") else "changed"
+            tag = {"completed": "Completed", "started": "Started", "changed": "Updated"}[kcls]
             text = _esc(u.get("text")) if not _tbd(u.get("text")) else "Update being finalized"
             items.append(
                 f'<li class="gf-feed__item gf-feed__item--{kcls}">'
                 f'<time class="gf-feed__date">{date}</time>'
-                f'<span class="gf-feed__text">{text}</span></li>'
+                f'<span class="gf-feed__body">'
+                f'<span class="gf-feed__tag">{tag}</span>'
+                f'<span class="gf-feed__text">{text}</span></span></li>'
             )
         body = "".join(items)
     return f"""<section class="gf-updates gf-reveal">
