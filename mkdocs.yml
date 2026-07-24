@@ -22,15 +22,18 @@ theme:
       toggle: { icon: material/brightness-auto, name: Switch to light mode }
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle: { icon: material/weather-night, name: Switch to dark mode }
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle: { icon: material/weather-sunny, name: Switch to system preference }
   features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.instant.prefetch
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
