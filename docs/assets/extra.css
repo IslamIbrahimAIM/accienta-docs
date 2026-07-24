@@ -1,0 +1,62 @@
+/* Premium polish on top of Material. Client branding tweaks live here. */
+
+:root {
+  --md-primary-fg-color: #4f46e5;
+  --md-primary-fg-color--light: #6366f1;
+  --md-primary-fg-color--dark: #4338ca;
+  --md-accent-fg-color: #4f46e5;
+}
+
+/* Roomier typography for a documentation-portal feel. */
+.md-typeset {
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+.md-typeset h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.md-typeset h2 {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin-top: 2.2em;
+}
+
+/* Hero card used on the overview page. */
+.hero {
+  padding: 2.4rem 2rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-primary-fg-color--dark));
+  color: #fff;
+  margin-bottom: 2rem;
+}
+.hero h1 { color: #fff; margin: 0 0 0.4rem; }
+.hero p { color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 0.9rem; }
+
+/* Status pills. */
+.pill {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.pill--done { background: #dcfce7; color: #166534; }
+.pill--progress { background: #fef9c3; color: #854d0e; }
+.pill--planned { background: #e0e7ff; color: #3730a3; }
+
+/* Feedback widget. */
+.feedback-suggest {
+  margin-top: 3rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+.feedback-suggest .feedback-note {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.5rem;
+}
+
+/* Cards grid for the overview. */
+.grid.cards > ul { gap: 0.8rem; }

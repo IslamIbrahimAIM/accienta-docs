@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+<!--
+  Client feedback widget. Rendered only when a feedback provider is configured.
+  github_issues opens a pre-filled issue in the dedicated docs repository —
+  the client never needs access to the source code repository.
+  Additional providers can be added as further conditional branches.
+-->
+{% block content %}
+  {{ super() }}
+
+  {% if config.extra.feedback_provider == "github_issues"
+        and config.extra.repo_owner and config.extra.repo_name %}
+    {% set issue_title = "Documentation Feedback - " ~ page.title %}
+    {% set issue_body =
+        "Page: " ~ page.title ~ "\n"
+        ~ "URL: " ~ page.canonical_url ~ "\n"
+        ~ "Section: \n\n"
+        ~ "Client Comment:\n\n\n"
+        ~ "Requested Change:\n\n" %}
+    {% set issue_url =
+        "https://github.com/" ~ config.extra.repo_owner ~ "/"
+        ~ config.extra.repo_name ~ "/issues/new"
+        ~ "?labels=documentation,client-feedback"
+        ~ "&title=" ~ (issue_title | urlencode)
+        ~ "&body=" ~ (issue_body | urlencode) %}
+    <div class="feedback-suggest">
+      <a class="md-button md-button--primary" href="{{ issue_url }}"
+         target="_blank" rel="noopener">
+        Suggest an Improvement
+      </a>
+      <p class="feedback-note">
+        Your feedback opens a request our team reviews — no account setup beyond GitHub sign-in.
+      </p>
+    </div>
+  {% endif %}
+{% endblock %}

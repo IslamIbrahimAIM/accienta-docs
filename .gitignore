@@ -1,0 +1,12 @@
+# Docs repository ignores. Keeps build output and any stray secrets out.
+site/
+.cache/
+.venv/
+__pycache__/
+.env
+.env.*
+*.pem
+*.key
+*_client_secret*.json
+client_secret*.json
+.DS_Store

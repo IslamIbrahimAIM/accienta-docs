@@ -1,0 +1,110 @@
+# Client documentation portal — MkDocs Material.
+# Placeholders (Accienta etc.) are filled by the MCP docs tools.
+# This file and everything under docs/ is independent from the Odoo repository.
+
+site_name: Accienta — Project Portal
+site_description: Implementation portal for Accienta
+site_author: Accienta
+# site_url is set at publish time from docs.config.yml
+copyright: Copyright &copy; Accienta implementation
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: en
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle: { icon: material/brightness-auto, name: Switch to light mode }
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle: { icon: material/weather-night, name: Switch to dark mode }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle: { icon: material/weather-sunny, name: Switch to system preference }
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
+
+nav:
+  - Overview: index.md
+  - Implementation:
+      - Progress: implementation.md
+      - Modules: modules.md
+      - Workflows: workflows.md
+  - Architecture:
+      - Overview: architecture.md
+      - Decisions: decisions.md
+  - Guides:
+      - Training: training.md
+      - User Guides: user-guides.md
+  - Change History: changelog.md
+
+plugins:
+  - search
+  - mermaid2
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+      title: On this page
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_css:
+  - assets/extra.css
+
+extra:
+  generator: false
+  # Filled by docs tools from docs.config.yml — used by the feedback widget.
+  feedback_provider: github_issues
+  repo_owner: islamibrahim-accienta
+  repo_name: accienta-docs
+  social:
+    - icon: material/web
+      link: https://accienta.com

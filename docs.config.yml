@@ -1,0 +1,29 @@
+# Deployment and feedback configuration for this client's documentation.
+# Read by the MCP docs tools; not consumed by Odoo in any way.
+
+client:
+  name: Accienta
+  slug: accienta
+
+# Where the built site is published.
+documentation:
+  hosting:
+    # provider: github_pages | cloudflare_pages
+    provider: github_pages
+    # Dedicated docs repository — separate from the Odoo repository.
+    repo: islamibrahim-accienta/accienta-docs
+    branch: gh-pages
+    # Optional custom domain (leave blank for the default Pages/CF URL).
+    custom_domain: ""
+    # cloudflare_pages only:
+    cloudflare_project: ""
+
+# Client feedback channel exposed by the "Suggest an Improvement" button.
+feedback:
+  # provider: github_issues | google_sheets | google_docs | jira | azure_devops | linear
+  provider: github_issues
+  github_issues:
+    repo: islamibrahim-accienta/accienta-docs
+    labels:
+      - documentation
+      - client-feedback
