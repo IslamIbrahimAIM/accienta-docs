@@ -32,7 +32,7 @@ _Version 19.0.1.0.4._
 
 Channel economics: cascading SRP, distributor cost and margin.
 
-_Version 19.0.1.0.7._
+_Version 19.0.1.0.0._
 
 ### Accienta KSA
 
@@ -56,25 +56,25 @@ _Version 19.0.1.0.0._
 
 Product master: channel pricing fields and xlsx product import.
 
-_Version 19.0.1.0.5._
+_Version 19.0.1.0.0._
 
 ### Accienta Purchase
 
 Auto-generate a confirmed vendor PO when a customer invoice is posted.
 
-_Version 19.0.1.0.3._
+_Version 19.0.1.0.0._
 
 ### Accienta Reports
 
 Customer portal and document presentation tweaks for Accienta.
 
-_Version 19.0.1.0.5._
+_Version 19.0.1.0.0._
 
 ### Accienta Sales
 
 Sales customizations for Accienta.
 
-_Version 19.0.1.0.4._
+_Version 19.0.1.0.5._
 
 ### Accienta UAE
 
