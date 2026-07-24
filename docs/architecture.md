@@ -15,7 +15,19 @@ flowchart LR
 ## Module map
 
 <!-- GENERATED:module-map -->
-_A dependency diagram of the custom modules is generated here._
+```mermaid
+flowchart LR
+    accienta_base --> accienta_crm
+    accienta_products --> accienta_economics
+    accienta_sales --> accienta_economics
+    accienta_coa --> accienta_ksa
+    accienta_base --> accienta_org
+    accienta_base --> accienta_products
+    accienta_economics --> accienta_purchase
+    accienta_base --> accienta_reports
+    accienta_base --> accienta_sales
+    accienta_coa --> accienta_uae
+```
 <!-- /GENERATED:module-map -->
 
 ## Design principles
