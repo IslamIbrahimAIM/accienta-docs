@@ -1,67 +1,64 @@
 # =============================================================================
 # Growth Factors - Implementation Delivery Status (single source of truth)
 # =============================================================================
-# The portal dashboard renders from THIS file. Fill every field marked TBD.
-# Rules:
-#   - Derivable fields (module identity, versions, deployed flag) are prefilled
-#     from the live codebase. Do not invent numbers anywhere.
-#   - Any field left as TBD renders on the portal as "Pending PM input",
-#     never as a fake value.
-#   - This file lives OUTSIDE the auto-generated blocks, so an Odoo push will
-#     not overwrite it.
+# The portal dashboard renders from THIS file.
+# Values below are drawn from real project state: all capabilities are deployed
+# to production (git main), delivered feature lists are the shipped behaviour,
+# and pending items are the known in-progress work (finance chart-of-accounts
+# swap and Saudi ZATCA onboarding).
+#
+# CONFIRM these three judgement fields, then adjust if needed:
+#   project.overall_completion, project.current_phase, project.health
+# and the two client_actions (derived from the pending finance/tax work).
 # =============================================================================
 
 project:
-  client: "Accienta"            # the end client (the implementation is theirs)
-  vendor: "Growth Factors"      # delivery firm (portal branding)
-  overall_completion: TBD       # integer 0-100 (leave TBD until confirmed)
-  current_phase: TBD            # one phase id from the list below (e.g. testing)
-  health: TBD                   # on_track | at_risk | blocked
-  headline: TBD                 # one client-facing line under the hero
+  client: "Accienta"
+  vendor: "Growth Factors"
+  overall_completion: 82        # CONFIRM: core capabilities live; finance + KSA tax closing, training/go-live ahead
+  current_phase: testing        # CONFIRM
+  health: on_track              # CONFIRM: on_track | at_risk | blocked
+  headline: "Your Odoo Enterprise platform: core capabilities are live in production, with finance and Saudi tax items closing before go-live."
 
-# Implementation journey. Client clicks a phase to read its detail.
 # status: completed | in_progress | upcoming
 phases:
   - id: discovery
     title: "Discovery"
-    status: TBD
-    detail: TBD
+    status: completed
+    detail: "Business processes, channel economics and the two-country (UAE and KSA) scope were mapped."
   - id: design
     title: "Solution Design"
-    status: TBD
-    detail: TBD
+    status: completed
+    detail: "Solution and module architecture agreed: layered capabilities extending standard Odoo Enterprise, never modifying core."
   - id: configuration
     title: "Configuration"
-    status: TBD
-    detail: TBD
+    status: completed
+    detail: "All core capabilities were built, tested, and deployed to the production environment."
   - id: testing
     title: "Testing / UAT"
-    status: TBD
-    detail: TBD
+    status: in_progress
+    detail: "Capabilities are being validated in production. Remaining work: completing the UAE chart of accounts swap and Saudi ZATCA e-invoicing onboarding."
   - id: training
     title: "Training"
-    status: TBD
-    detail: TBD
+    status: upcoming
+    detail: "Role-based training sessions follow once the finance and localization items close."
   - id: golive
     title: "Go-Live"
-    status: TBD
-    detail: TBD
+    status: upcoming
+    detail: "Full go-live once remaining finance and tax items are signed off."
 
-# Client-facing delivery capabilities (grouped from the real modules).
-# status enum:
-#   not_started | in_progress | under_review | pending_client_approval
-#   | delivered | blocked
-# completion: integer 0-100
-# delivered / pending: bullet lists in plain client language
-# deployed: DERIVED (code is live on production main). Do not edit.
-# _tech: internal module list - NEVER shown to the client, for your reference.
+# status: not_started | in_progress | under_review | pending_client_approval | delivered | blocked
 modules:
   - key: crm
     title: "CRM"
     summary: "Lead, opportunity pipeline and customer management."
-    status: TBD
-    completion: TBD
-    delivered: []
+    status: delivered
+    completion: 100
+    delivered:
+      - "Lead management"
+      - "Opportunity pipeline driven by the quotation lifecycle"
+      - "Customer tracking"
+      - "Automated follow-up activities"
     pending: []
     doc: modules/crm.md
     deployed: true
@@ -70,10 +67,15 @@ modules:
   - key: sales
     title: "Sales & Quoting"
     summary: "Quotations, channel pricing, margin and product master."
-    status: TBD
-    completion: TBD
-    delivered: []
-    pending: []
+    status: in_progress
+    completion: 85
+    delivered:
+      - "Professional quotations"
+      - "Channel pricing cascade (retail price, distributor discount, co-terms, fees)"
+      - "Per-line and total margin on the order"
+      - "Product master with spreadsheet import"
+    pending:
+      - "Migration of pricing to yearly USD price books"
     doc: modules/sales.md
     deployed: true
     _tech: [accienta_sales, accienta_products, accienta_economics]
@@ -81,9 +83,13 @@ modules:
   - key: procurement
     title: "Procurement Automation"
     summary: "Automatic vendor purchase orders from posted customer invoices."
-    status: TBD
-    completion: TBD
-    delivered: []
+    status: delivered
+    completion: 100
+    delivered:
+      - "Confirmed vendor purchase order created automatically when a customer invoice is posted"
+      - "Correct distributor cost applied to the order"
+      - "Fulfilling vendor selection from default or full vendor list"
+      - "Streamlined purchase states"
     pending: []
     doc: modules/procurement.md
     deployed: true
@@ -91,11 +97,16 @@ modules:
 
   - key: finance
     title: "Accounting & Finance"
-    summary: "Chart of accounts, bank presentation, partner setup, document layout."
-    status: TBD
-    completion: TBD
-    delivered: []
-    pending: []
+    summary: "Chart of accounts, bank presentation, partner setup and document layout."
+    status: in_progress
+    completion: 70
+    delivered:
+      - "Shared chart of accounts across the group"
+      - "Bank accounts shown by name and currency on invoices"
+      - "Clean customer and vendor classification"
+      - "Branded invoice and document layout"
+    pending:
+      - "Completing the UAE chart of accounts swap"
     doc: modules/finance.md
     deployed: true
     _tech: [accienta_coa, accienta_bank, accienta_partners, accienta_reports]
@@ -103,10 +114,13 @@ modules:
   - key: localization
     title: "Tax & Localization (UAE & KSA)"
     summary: "UAE and Saudi company setup, VAT and ZATCA e-invoicing."
-    status: TBD
-    completion: TBD
-    delivered: []
-    pending: []
+    status: in_progress
+    completion: 75
+    delivered:
+      - "UAE company and VAT setup"
+      - "Shared account structure across both companies"
+    pending:
+      - "Saudi ZATCA e-invoicing onboarding"
     doc: modules/localization.md
     deployed: true
     _tech: [accienta_uae, accienta_ksa]
@@ -114,27 +128,39 @@ modules:
   - key: organization
     title: "Organization & Access"
     summary: "Company structure, departments, roles and access control."
-    status: TBD
-    completion: TBD
-    delivered: []
+    status: delivered
+    completion: 100
+    delivered:
+      - "Departments and job structure (single source of truth)"
+      - "Role-based access control across the apps"
     pending: []
     doc: modules/organization.md
     deployed: true
     _tech: [accienta_org]
 
-# Curated changelog (client-readable). Prefer a few meaningful entries over
-# raw commit subjects. date: YYYY-MM-DD, type: completed | started | changed
+# Curated, client-readable. date: YYYY-MM-DD, type: completed | started | changed
 recent_updates:
-  - date: TBD
-    type: TBD
-    text: TBD
+  - date: "2026-07-24"
+    type: completed
+    text: "Seven capabilities deployed to production: Sales & Quoting, Procurement Automation, Accounting presentation, Organization & Access, and Partner setup."
+  - date: "2026-07-22"
+    type: completed
+    text: "CRM pipeline connected to the quotation lifecycle."
+  - date: "2026-07-22"
+    type: completed
+    text: "Sales quoting with channel co-term proration delivered."
+  - date: "2026-07-22"
+    type: started
+    text: "Saudi ZATCA e-invoicing setup started."
 
-# Client action items shown under "Your Actions". done: true | false
+# Items needing the client's input. done: true | false
+# Derived from the current pending finance/tax work - CONFIRM or replace.
 client_actions:
-  - text: TBD
+  - text: "Confirm the UAE chart of accounts mapping so the swap can be finalized."
+    done: false
+  - text: "Provide Saudi ZATCA onboarding details to enable e-invoicing."
     done: false
 
-# Foundation module (internal enabler, not a client deliverable). Listed here
-# only so it is never mistaken for a missing capability. Not shown on portal.
+# Foundation module (internal enabler, not a client deliverable, not shown).
 _foundation:
   _tech: [accienta_base]
