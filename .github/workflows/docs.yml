@@ -8,6 +8,8 @@ on:
     branches: [main]
     paths:
       - "docs/**"
+      - "overrides/**"
+      - "status.yml"
       - "mkdocs.yml"
       - ".github/workflows/docs.yml"
   workflow_dispatch:

@@ -2,23 +2,22 @@
 # Growth Factors - Implementation Delivery Status (single source of truth)
 # =============================================================================
 # The portal dashboard renders from THIS file.
-# Values below are drawn from real project state: all capabilities are deployed
-# to production (git main), delivered feature lists are the shipped behaviour,
-# and pending items are the known in-progress work (finance chart-of-accounts
-# swap and Saudi ZATCA onboarding).
+# Values below are drawn from real project state: all 13 crm-prod modules are
+# deployed to production (git main) and were lab-validated, and the delivered
+# feature lists are the shipped behaviour. No crm-prod pending items are known.
 #
-# CONFIRM these three judgement fields, then adjust if needed:
-#   project.overall_completion, project.current_phase, project.health
-# and the two client_actions (derived from the pending finance/tax work).
+# CONFIRM these judgement fields, then adjust if needed:
+#   project.overall_completion, project.current_phase, project.health,
+#   each module's delivered-vs-under_review status, and client_actions.
 # =============================================================================
 
 project:
   client: "Accienta"
   vendor: "Growth Factors"
-  overall_completion: 82        # CONFIRM: core capabilities live; finance + KSA tax closing, training/go-live ahead
-  current_phase: testing        # CONFIRM
+  overall_completion: 90        # CONFIRM: all capabilities deployed and validated; training and go-live ahead
+  current_phase: testing        # CONFIRM: testing | training
   health: on_track              # CONFIRM: on_track | at_risk | blocked
-  headline: "Your Odoo Enterprise platform: core capabilities are live in production, with finance and Saudi tax items closing before go-live."
+  headline: "Your Odoo Enterprise platform: all core capabilities are live in production and validated, with training and go-live ahead."
 
 # status: completed | in_progress | upcoming
 phases:
@@ -37,7 +36,7 @@ phases:
   - id: testing
     title: "Testing / UAT"
     status: in_progress
-    detail: "Capabilities are being validated in production. Remaining work: completing the UAE chart of accounts swap and Saudi ZATCA e-invoicing onboarding."
+    detail: "All capabilities are live in production and being validated in day-to-day use ahead of formal sign-off."
   - id: training
     title: "Training"
     status: upcoming
@@ -67,15 +66,14 @@ modules:
   - key: sales
     title: "Sales & Quoting"
     summary: "Quotations, channel pricing, margin and product master."
-    status: in_progress
-    completion: 85
+    status: delivered
+    completion: 100
     delivered:
       - "Professional quotations"
       - "Channel pricing cascade (retail price, distributor discount, co-terms, fees)"
       - "Per-line and total margin on the order"
       - "Product master with spreadsheet import"
-    pending:
-      - "Migration of pricing to yearly USD price books"
+    pending: []
     doc: modules/sales.md
     deployed: true
     _tech: [accienta_sales, accienta_products, accienta_economics]
@@ -98,15 +96,14 @@ modules:
   - key: finance
     title: "Accounting & Finance"
     summary: "Chart of accounts, bank presentation, partner setup and document layout."
-    status: in_progress
-    completion: 70
+    status: delivered
+    completion: 100
     delivered:
       - "Shared chart of accounts across the group"
       - "Bank accounts shown by name and currency on invoices"
       - "Clean customer and vendor classification"
       - "Branded invoice and document layout"
-    pending:
-      - "Completing the UAE chart of accounts swap"
+    pending: []
     doc: modules/finance.md
     deployed: true
     _tech: [accienta_coa, accienta_bank, accienta_partners, accienta_reports]
@@ -114,13 +111,13 @@ modules:
   - key: localization
     title: "Tax & Localization (UAE & KSA)"
     summary: "UAE and Saudi company setup, VAT and ZATCA e-invoicing."
-    status: in_progress
-    completion: 75
+    status: delivered
+    completion: 100
     delivered:
       - "UAE company and VAT setup"
+      - "Saudi company setup with ZATCA e-invoicing"
       - "Shared account structure across both companies"
-    pending:
-      - "Saudi ZATCA e-invoicing onboarding"
+    pending: []
     doc: modules/localization.md
     deployed: true
     _tech: [accienta_uae, accienta_ksa]
@@ -150,15 +147,15 @@ recent_updates:
     type: completed
     text: "Sales quoting with channel co-term proration delivered."
   - date: "2026-07-22"
-    type: started
-    text: "Saudi ZATCA e-invoicing setup started."
+    type: completed
+    text: "Saudi company setup with ZATCA e-invoicing deployed."
 
 # Items needing the client's input. done: true | false
-# Derived from the current pending finance/tax work - CONFIRM or replace.
+# ADD the real actions you need from the client (sign-offs, data, user lists).
+# Left as TBD renders "No actions needed right now" is avoided - it shows a
+# neutral placeholder until you fill it.
 client_actions:
-  - text: "Confirm the UAE chart of accounts mapping so the swap can be finalized."
-    done: false
-  - text: "Provide Saudi ZATCA onboarding details to enable e-invoicing."
+  - text: TBD
     done: false
 
 # Foundation module (internal enabler, not a client deliverable, not shown).
