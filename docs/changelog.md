@@ -8,6 +8,7 @@ search:
 A running record of what changed and when, most recent first.
 
 <!-- GENERATED:changelog -->
+- **2026-07-30** — Bump versions so the rename migrations run
 - **2026-07-30** — new partial fixes on po, so, invoices, and calculations
 - **2026-07-27** — Add price books, pricing freeze and quotation versions
 - **2026-07-24** — Add products, economics, purchase, reports, bank, org, partners modules
