@@ -9,6 +9,32 @@ Significant choices made during the implementation, with the reasoning behind
 them. These are recorded so the solution stays understandable over time.
 
 <!-- GENERATED:decisions -->
+### Cost of revenue carries the customer discount; revenue measured gross
+
+**Decision:** On sale.order.line the cost of revenue is the supplier payable plus the customer discount granted:
+
+  vendor_net    = 1 - backend% - fee% - disti%
+  payable_unit  = SRP2 x vendor_net
+  gross_unit    = price_unit x (1 - disti%)
+  discount_cost = gross_unit x Disc.%
+  cost_unit     = payable_unit + discount_cost
+
+accienta_sales_total is therefore GROSS of the customer discount, built as sum(price_subtotal) + sum(accienta_discount_cost_line) so it stays exact against Odoo's rounded line amounts. Unit gross profit is gross_unit - cost_unit.
+
+accienta_to_pay_disti_line stays the supplier payable and never carries the customer discount. The per-unit twin was deleted; the field is always x quantity.
+
+**Reason:** The customer discount previously multiplied the cost as well as the price, so both sides shrank together and the margin percentage never moved: giving 25% away looked free. The discount is a variable cost of winning the revenue, so it belongs in the cost of revenue. Counting it in the cost AND netting it off the revenue would subtract it twice, which is why revenue moved to gross. The distributor discount is passed on to the customer by _prepare_base_line_for_taxes_computation, so the billed base is already net of it and Disc.% is measured on that base, not on the full unit price.
+
+**Impact:** Management revenue and cost no longer tie to the GL (they differ by the discount); profit does tie. Migration 19.0.1.0.2 recomputes every line, confirmed orders included. Dormant until the manifest version is bumped at push time.
+
+### Price Books are dedicated models, not product.pricelist
+
+**Decision:** The yearly Price Book in crm-prod is a dedicated pair of models, accienta.price.book and accienta.price.book.line, owned by accienta_products. It is not an extension of product.pricelist. A book holds one company's published USD prices and vendor rates for one year; line fields are product_tmpl_id, price_usd, fee_pct, backend_base, backend_total, with rates as fractions (0.05 = 5%). The name is computed as company plus year, uniqueness is a SQL constraint on (company_id, year), and state is draft / active / locked with at most one active book per company. Importing a price file loads book lines only and has zero live impact. Activation is the switch: it supersedes the current active book to locked and writes price, list_price and rates onto product.template, which every other application reads. Locked means a frozen historical record kept for analysis with no path into a quotation. A book that is not draft cannot be deleted.
+
+**Reason:** The first implementation extended product.pricelist, so every book existed as a pricelist row. Books then appeared in the quotation pricelist field, the customer pricelist field and the Configuration Pricelists list, and had to be suppressed with view domains plus an order constraint. Islam rejected that outright: a book must never create or behave as a pricelist, and the customer pricelist keeps one job only, the currency of the deal. With dedicated models every one of those guards became unnecessary and was deleted, uniqueness became a real SQL constraint (impossible while sharing a table with ordinary pricelists, which carry no year), and the currency field was dropped since book prices are USD by definition.
+
+**Impact:** Deleted: models/product_pricelist.py, models/product_pricelist_item.py, views/product_pricelist_views.xml, the accienta_pricebook_is_book flag, the partner and quotation pricelist domains, the override of the core product_pricelist_action2 domain, and _check_pricelist_is_not_a_pricebook on sale.order. Changing the comodel behind existing many2one columns required clearing stale references before the upgrade could pass.
+
 ### accienta_purchase: invoice-to-PO with SO vendor picker
 
 **Decision:** New module accienta_purchase (depends accienta_economics, purchase). Posting a customer invoice auto-creates one confirmed purchase order per PO vendor (no RFQ), grouping invoice lines by the PO vendor chosen on each line's originating sale order; idempotent across re-posts. The PO vendor is picked on the sale order from res.company.accienta_default_vendor_ids (a many-to-many configured in Settings); a 'Show all vendors' boolean toggle widens the picker domain from the default vendors to all suppliers, because Odoo's native 'Search More' cannot escape a field domain. PO lines carry the deal economics (effective SRP, customer discount, distributor discount, backend, fee, DDA) seeded from the sale line and are priced at accienta_cost_unit = effective SRP x (1 - Disc%) x (1 - backend% - fee% - distributor%), editable on the PO without affecting the invoice. purchase.order links back via accienta_source_invoice_id and accienta_source_sale_id.
