@@ -37,7 +37,7 @@ _Version 19.0.1.0.4._
 
 Channel economics: cascading SRP, distributor cost and margin.
 
-_Version 19.0.1.0.3._
+_Version 19.0.1.0.4._
 
 ### Accienta KSA
 
@@ -49,7 +49,7 @@ _Version 19.0.1.0.1._
 
 Single source of truth for the Accienta organizational structure.
 
-_Version 19.0.1.0.1._
+_Version 19.0.1.0.2._
 
 ### Accienta Partners
 
