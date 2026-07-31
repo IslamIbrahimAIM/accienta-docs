@@ -19,7 +19,7 @@ _Version 19.0.1.0.0._
 
 Technical Foundation for Accienta Ext. Modules.
 
-_Version 19.0.1.0.4._
+_Version 19.0.1.0.5._
 
 ### Accienta Chart of Accounts
 
@@ -37,7 +37,7 @@ _Version 19.0.1.0.4._
 
 Channel economics: cascading SRP, distributor cost and margin.
 
-_Version 19.0.1.0.2._
+_Version 19.0.1.0.3._
 
 ### Accienta KSA
 
@@ -49,7 +49,7 @@ _Version 19.0.1.0.1._
 
 Single source of truth for the Accienta organizational structure.
 
-_Version 19.0.1.0.0._
+_Version 19.0.1.0.1._
 
 ### Accienta Partners
 
@@ -61,13 +61,13 @@ _Version 19.0.1.0.0._
 
 Product master, yearly Price Books and xlsx price import.
 
-_Version 19.0.1.0.1._
+_Version 19.0.1.0.2._
 
 ### Accienta Purchase
 
 Auto-generate a confirmed vendor PO when a customer invoice is posted.
 
-_Version 19.0.1.0.1._
+_Version 19.0.1.0.2._
 
 ### Accienta Reports
 
